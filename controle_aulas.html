@@ -67,8 +67,7 @@
   .aula-item:last-child { border-bottom: none; }
   .badge { font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 6px; white-space: nowrap; }
   .badge-80 { background: #e8f0fe; color: #1a6fa8; }
-  .badge-90 { background: #e6f4ee; color: #0f7a55; }
-  .aula-nome      { font-size: 14px; font-weight: 500; color: #222; }
+  .badge-90 { background: #e6f4ee; color: #0f7a55; }  .aula-nome      { font-size: 14px; font-weight: 500; color: #222; }
   .aula-detalhes  { font-size: 12px; color: #999; margin-top: 2px; }
   .btn-rm { background: none; border: none; color: #ccc; cursor: pointer; font-size: 18px; padding: 6px 8px; border-radius: 6px; min-width: 36px; min-height: 36px; display: flex; align-items: center; justify-content: center; }
   .btn-rm:active { background: #fee; color: #c00; }
@@ -113,6 +112,12 @@
   .install-banner p { font-size: 13px; color: #0f7a55; font-weight: 500; flex: 1; }
   .btn-install { background: #0f7a55; color: #fff; font-size: 13px; height: 36px; padding: 0 14px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
   .install-banner.hidden { display: none; }
+
+  /* BOTÕES DE VALOR */
+  .btn-valor { flex: 1; height: 44px; font-size: 15px; font-weight: 600; border: 2px solid #e5e5e5; border-radius: 10px; background: #fff; color: #888; cursor: pointer; transition: all 0.15s; }
+  .btn-valor:active { transform: scale(0.97); }
+  .btn-valor.selecionado-aux { border-color: #1a6fa8; background: #e8f0fe; color: #1a6fa8; }
+  .btn-valor.selecionado-ind { border-color: #0f7a55; background: #e6f4ee; color: #0f7a55; }
 </style>
 </head>
 <body>
@@ -170,14 +175,25 @@
   <div class="container">
     <div class="card">
       <p class="card-title">Registrar aula</p>
-      <div class="form-row">
-        <input class="input-field" id="aluno" type="text" placeholder="Nome do aluno (opcional)" autocomplete="off" />
-        <select class="select-field" id="valor">
-          <option value="80">R$ 80</option>
-          <option value="90">R$ 90</option>
-        </select>
-        <button class="btn btn-add" onclick="adicionarAula()">+ Add</button>
+      <input class="input-field" id="aluno" type="text" placeholder="Nome do aluno (opcional)" autocomplete="off" style="width:100%;margin-bottom:12px;" />
+
+      <div style="margin-bottom:12px;">
+        <p style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Com Daiane</p>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-valor" data-valor="80" onclick="selecionarValor('80')">R$ 80</button>
+          <button class="btn-valor" data-valor="90" onclick="selecionarValor('90')">R$ 90</button>
+        </div>
       </div>
+
+      <div style="margin-bottom:14px;">
+        <p style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Giovana</p>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-valor" data-valor="80s" onclick="selecionarValor('80s')">R$ 80</button>
+          <button class="btn-valor" data-valor="90s" onclick="selecionarValor('90s')">R$ 90</button>
+        </div>
+      </div>
+
+      <button class="btn btn-add" onclick="adicionarAula()" style="width:100%;">+ Adicionar aula</button>
     </div>
 
     <div class="card">
@@ -223,12 +239,20 @@
           <input type="number" id="p-ano" value="2025" min="2020" max="2099" onchange="calcularPassado()" style="width:100%;height:44px;padding:0 12px;font-size:15px;border:1px solid #ddd;border-radius:8px;background:#fafafa;color:#1a1a1a;outline:none;" />
         </div>
         <div class="field-group">
-          <label>Qtd aulas R$ 80</label>
+          <label>Qtd aulas R$ 80 — com auxiliar</label>
           <input type="number" id="p-qtd80" value="0" min="0" oninput="calcularPassado()" style="width:100%;height:44px;padding:0 12px;font-size:15px;border:1px solid #ddd;border-radius:8px;background:#fafafa;color:#1a1a1a;outline:none;" />
         </div>
         <div class="field-group">
-          <label>Qtd aulas R$ 90</label>
+          <label>Qtd aulas R$ 90 — com auxiliar</label>
           <input type="number" id="p-qtd90" value="0" min="0" oninput="calcularPassado()" style="width:100%;height:44px;padding:0 12px;font-size:15px;border:1px solid #ddd;border-radius:8px;background:#fafafa;color:#1a1a1a;outline:none;" />
+        </div>
+        <div class="field-group">
+          <label>Qtd aulas R$ 80 — sem auxiliar</label>
+          <input type="number" id="p-qtd80s" value="0" min="0" oninput="calcularPassado()" style="width:100%;height:44px;padding:0 12px;font-size:15px;border:1px solid #ddd;border-radius:8px;background:#fafafa;color:#1a1a1a;outline:none;" />
+        </div>
+        <div class="field-group">
+          <label>Qtd aulas R$ 90 — sem auxiliar</label>
+          <input type="number" id="p-qtd90s" value="0" min="0" oninput="calcularPassado()" style="width:100%;height:44px;padding:0 12px;font-size:15px;border:1px solid #ddd;border-radius:8px;background:#fafafa;color:#1a1a1a;outline:none;" />
         </div>
       </div>
 
@@ -272,7 +296,12 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  var REGRAS = { 80: { voce: 15, aux: 25 }, 90: { voce: 20, aux: 25 } };
+  var REGRAS = {
+    '80':     { voce: 15, aux: 25 },
+    '90':     { voce: 20, aux: 25 },
+    '80s':    { voce: 40, aux: 0  },
+    '90s':    { voce: 45, aux: 0  }
+  };
   var aulas = [];
   var deferredPrompt = null;
   var telaAtual = 'tela-home';
@@ -321,10 +350,24 @@
   function irHome() { irTela('tela-home'); }
 
   // ── RECENTES ─────────────────────────────────
+  var valorSelecionado = '80';
+
+  // Seleciona R$80 com auxiliar por padrão ao carregar
+  setTimeout(function() { selecionarValor('80'); }, 50);
+
+  function selecionarValor(v) {
+    valorSelecionado = v;
+    document.querySelectorAll('.btn-valor').forEach(function(b) {
+      b.classList.remove('selecionado-aux', 'selecionado-ind');
+    });
+    var semAux = v.indexOf('s') >= 0;
+    var btn = document.querySelector('.btn-valor[data-valor="' + v + '"]');
+    if (btn) btn.classList.add(semAux ? 'selecionado-ind' : 'selecionado-aux');
+  }
+
   function adicionarAula() {
     var aluno = document.getElementById('aluno').value.trim() || 'Aluno';
-    var valor = parseInt(document.getElementById('valor').value);
-    aulas.push({ aluno: aluno, valor: valor, id: Date.now() });
+    aulas.push({ aluno: aluno, valor: valorSelecionado, id: Date.now() });
     document.getElementById('aluno').value = '';
     document.getElementById('aluno').focus();
     renderizar();
@@ -348,13 +391,17 @@
     }
     var tv = 0, ta = 0, tf = 0, html = '';
     for (var i = 0; i < aulas.length; i++) {
-      var a = aulas[i]; var r = REGRAS[a.valor]; var emp = a.valor - r.voce - r.aux;
+      var a = aulas[i]; var r = REGRAS[a.valor]; var emp = parseInt(a.valor) - r.voce - r.aux;
       tv += r.voce; ta += r.aux; tf += emp;
+      var semAux = a.valor.indexOf('s') >= 0;
+      var badgeClass = a.valor.indexOf('90') >= 0 ? 'badge-90' : 'badge-80';
+      var badgeLabel = 'R$' + parseInt(a.valor) + (semAux ? ' •' : '');
+      var auxTexto = semAux ? '' : ' · Aux R$' + r.aux;
       html += '<div class="aula-item">' +
         '<button class="btn-rm" data-id="' + a.id + '">✕</button>' +
-        '<span class="badge badge-' + a.valor + '">R$' + a.valor + '</span>' +
+        '<span class="badge ' + badgeClass + '">' + badgeLabel + '</span>' +
         '<div style="flex:1"><div class="aula-nome">' + a.aluno + '</div>' +
-        '<div class="aula-detalhes">Você R$' + r.voce + ' · Aux R$' + r.aux + ' · Empresa R$' + emp + '</div></div>' +
+        '<div class="aula-detalhes">Você R$' + r.voce + auxTexto + ' · Empresa R$' + emp + '</div></div>' +
         '</div>';
     }
     lista.innerHTML = html;
@@ -373,7 +420,7 @@
     btn.disabled = true; btn.textContent = 'Enviando...';
     var payload = aulas.map(function(a) {
       var r = REGRAS[a.valor];
-      return { data: dataISO, aluno: a.aluno, valor: a.valor, voce: r.voce, auxiliar: r.aux, empresa: a.valor - r.voce - r.aux };
+      return { data: dataISO, aluno: a.aluno, valor: parseInt(a.valor), voce: r.voce, auxiliar: r.aux, empresa: parseInt(a.valor) - r.voce - r.aux };
     });
     fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tipo: 'recente', aulas: payload }) })
     .then(function() {
@@ -386,13 +433,15 @@
 
   // ── PASSADOS ─────────────────────────────────
   function calcularPassado() {
-    var qtd80 = parseInt(document.getElementById('p-qtd80').value) || 0;
-    var qtd90 = parseInt(document.getElementById('p-qtd90').value) || 0;
-    var totalAulas  = qtd80 + qtd90;
-    var totalBruto  = qtd80 * 80 + qtd90 * 90;
-    var totalVoce   = qtd80 * REGRAS[80].voce + qtd90 * REGRAS[90].voce;
-    var totalAux    = (qtd80 + qtd90) * 25;
-    var totalEmp    = totalBruto - totalVoce - totalAux;
+    var qtd80  = parseInt(document.getElementById('p-qtd80').value)  || 0;
+    var qtd90  = parseInt(document.getElementById('p-qtd90').value)  || 0;
+    var qtd80s = parseInt(document.getElementById('p-qtd80s').value) || 0;
+    var qtd90s = parseInt(document.getElementById('p-qtd90s').value) || 0;
+    var totalAulas = qtd80 + qtd90 + qtd80s + qtd90s;
+    var totalBruto = qtd80 * 80 + qtd90 * 90 + qtd80s * 80 + qtd90s * 90;
+    var totalVoce  = qtd80 * 15 + qtd90 * 20 + qtd80s * 40 + qtd90s * 45;
+    var totalAux   = (qtd80 + qtd90) * 25;
+    var totalEmp   = totalBruto - totalVoce - totalAux;
     document.getElementById('rp-aulas').textContent   = totalAulas;
     document.getElementById('rp-bruto').textContent   = 'R$ ' + totalBruto;
     document.getElementById('rp-voce').textContent    = 'R$ ' + totalVoce;
@@ -403,23 +452,26 @@
   function enviarPassado() {
     var url = localStorage.getItem('sheets_url');
     if (!url) { mostrarToast('Configure o Sheets primeiro!', 'erro'); irTela('tela-config'); return; }
-    var qtd80 = parseInt(document.getElementById('p-qtd80').value) || 0;
-    var qtd90 = parseInt(document.getElementById('p-qtd90').value) || 0;
-    if (qtd80 + qtd90 === 0) { mostrarToast('Informe a quantidade de aulas!', 'erro'); return; }
+    var qtd80  = parseInt(document.getElementById('p-qtd80').value)  || 0;
+    var qtd90  = parseInt(document.getElementById('p-qtd90').value)  || 0;
+    var qtd80s = parseInt(document.getElementById('p-qtd80s').value) || 0;
+    var qtd90s = parseInt(document.getElementById('p-qtd90s').value) || 0;
+    if (qtd80 + qtd90 + qtd80s + qtd90s === 0) { mostrarToast('Informe a quantidade de aulas!', 'erro'); return; }
 
     var mes  = document.getElementById('p-mes').value.padStart(2, '0');
     var ano  = document.getElementById('p-ano').value;
     var data = ano + '-' + mes + '-01';
 
-    var totalBruto = qtd80 * 80 + qtd90 * 90;
-    var totalVoce  = qtd80 * REGRAS[80].voce + qtd90 * REGRAS[90].voce;
+    var totalBruto = qtd80 * 80 + qtd90 * 90 + qtd80s * 80 + qtd90s * 90;
+    var totalVoce  = qtd80 * 15 + qtd90 * 20 + qtd80s * 40 + qtd90s * 45;
     var totalAux   = (qtd80 + qtd90) * 25;
     var totalEmp   = totalBruto - totalVoce - totalAux;
 
     var btn = document.getElementById('btn-send-passado');
     btn.disabled = true; btn.textContent = 'Enviando...';
 
-    var payload = { tipo: 'passado', data: data, qtd80: qtd80, qtd90: qtd90, totalAulas: qtd80 + qtd90, totalBruto: totalBruto, voce: totalVoce, auxiliar: totalAux, empresa: totalEmp };
+    var payload = { tipo: 'passado', data: data, qtd80: qtd80, qtd90: qtd90, qtd80s: qtd80s, qtd90s: qtd90s,
+      totalAulas: qtd80 + qtd90 + qtd80s + qtd90s, totalBruto: totalBruto, voce: totalVoce, auxiliar: totalAux, empresa: totalEmp };
 
     fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
     .then(function() {
