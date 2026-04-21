@@ -38,7 +38,7 @@
   .metric-value { font-size: 18px; font-weight: 700; }
   .m-voce { color: #0f7a55; }
   .m-aux { color: #1a6fa8; }
-  .m-firma { color: #555; }
+  .m-empresa { color: #555; }
 
   .aula-item { display: flex; align-items: center; gap: 8px; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
   .aula-item:last-child { border-bottom: none; }
@@ -135,7 +135,7 @@
     <div class="metrics">
       <div class="metric"><div class="metric-label">Você</div><div class="metric-value m-voce" id="m-voce">R$ 0</div></div>
       <div class="metric"><div class="metric-label">Auxiliar</div><div class="metric-value m-aux" id="m-aux">R$ 0</div></div>
-      <div class="metric"><div class="metric-label">Firma</div><div class="metric-value m-firma" id="m-firma">R$ 0</div></div>
+      <div class="metric"><div class="metric-label">Empresa</div><div class="metric-value m-empresa" id="m-empresa">R$ 0</div></div>
     </div>
   </div>
 
@@ -226,20 +226,20 @@
     document.getElementById('btn-send').disabled = aulas.length === 0;
     if (aulas.length === 0) {
       lista.innerHTML = '<p class="empty">Nenhuma aula registrada hoje.</p>';
-      ['m-voce','m-aux','m-firma'].forEach(function(id) { document.getElementById(id).textContent = 'R$ 0'; });
+      ['m-voce','m-aux','m-empresa'].forEach(function(id) { document.getElementById(id).textContent = 'R$ 0'; });
       return;
     }
     var tv = 0, ta = 0, tf = 0, html = '';
     for (var i = 0; i < aulas.length; i++) {
       var a = aulas[i];
       var r = REGRAS[a.valor];
-      var firma = a.valor - r.voce - r.aux;
-      tv += r.voce; ta += r.aux; tf += firma;
+      var empresa = a.valor - r.voce - r.aux;
+      tv += r.voce; ta += r.aux; tf += empresa;
       html += '<div class="aula-item">' +
         '<button class="btn-rm" data-id="' + a.id + '">✕</button>' +
         '<span class="badge badge-' + a.valor + '">R$' + a.valor + '</span>' +
         '<div style="flex:1"><div class="aula-nome">' + a.aluno + '</div>' +
-        '<div class="aula-detalhes">Você R$' + r.voce + ' · Aux R$' + r.aux + ' · Firma R$' + firma + '</div></div>' +
+        '<div class="aula-detalhes">Você R$' + r.voce + ' · Aux R$' + r.aux + ' · Empresa R$' + empresa + '</div></div>' +
         '</div>';
     }
     lista.innerHTML = html;
@@ -248,7 +248,7 @@
     });
     document.getElementById('m-voce').textContent = 'R$ ' + tv;
     document.getElementById('m-aux').textContent = 'R$ ' + ta;
-    document.getElementById('m-firma').textContent = 'R$ ' + tf;
+    document.getElementById('m-empresa').textContent = 'R$ ' + tf;
   }
 
   function enviarParaSheets() {
@@ -258,7 +258,7 @@
     btn.disabled = true; btn.textContent = 'Enviando...';
     var payload = aulas.map(function(a) {
       var r = REGRAS[a.valor];
-      return { data: dataISO, aluno: a.aluno, valor: a.valor, voce: r.voce, auxiliar: r.aux, firma: a.valor - r.voce - r.aux };
+      return { data: dataISO, aluno: a.aluno, valor: a.valor, voce: r.voce, auxiliar: r.aux, empresa: a.valor - r.voce - r.aux };
     });
     fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ aulas: payload }) })
     .then(function() {
