@@ -13,25 +13,9 @@
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; min-height: 100vh; padding-bottom: env(safe-area-inset-bottom); }
 
-  /* ── LOGIN ── */
-  #tela-login { position: fixed; inset: 0; background: #0f7a55; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 999; padding: 32px; }
-  #tela-login h2 { color: #fff; font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-  #tela-login p { color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 32px; }
-  .login-card { background: #fff; border-radius: 16px; padding: 28px 24px; width: 100%; max-width: 340px; }
-  .login-label { font-size: 13px; color: #555; margin-bottom: 6px; display: block; }
-  .login-input { width: 100%; height: 48px; padding: 0 14px; font-size: 16px; border: 1.5px solid #ddd; border-radius: 10px; background: #fafafa; color: #1a1a1a; outline: none; margin-bottom: 16px; }
-  .login-input:focus { border-color: #0f7a55; }
-  .btn-login { width: 100%; height: 50px; background: #0f7a55; color: #fff; font-size: 16px; font-weight: 700; border: none; border-radius: 10px; cursor: pointer; }
-  .btn-login:active { opacity: 0.85; }
-  .login-erro { color: #c00; font-size: 13px; text-align: center; margin-top: 10px; min-height: 18px; }
-  #tela-login.hidden { display: none; }
-
-  /* ── APP ── */
   .header { background: #0f7a55; padding: 16px 20px; padding-top: calc(16px + env(safe-area-inset-top)); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
   .header h1 { font-size: 18px; font-weight: 600; color: #fff; }
-  .header-right { display: flex; align-items: center; gap: 10px; }
   .header-date { font-size: 12px; color: rgba(255,255,255,0.75); }
-  .btn-logout { background: rgba(255,255,255,0.2); border: none; color: #fff; font-size: 12px; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
 
   .container { max-width: 540px; margin: 0 auto; padding: 16px; }
   .card { background: #fff; border-radius: 12px; border: 1px solid #e5e5e5; padding: 16px; margin-bottom: 12px; }
@@ -94,158 +78,96 @@
 </head>
 <body>
 
-<!-- TELA DE LOGIN -->
-<div id="tela-login">
-  <h2>📚 Controle de Aulas</h2>
-  <p>Acesso restrito</p>
-  <div class="login-card">
-    <label class="login-label">Usuário</label>
-    <input class="login-input" id="login-user" type="text" placeholder="seu usuário" autocomplete="username" autocapitalize="none" />
-    <label class="login-label">Senha</label>
-    <input class="login-input" id="login-pass" type="password" placeholder="sua senha" autocomplete="current-password" />
-    <button class="btn-login" onclick="fazerLogin()">Entrar</button>
-    <p class="login-erro" id="login-erro"></p>
-  </div>
+<div class="header">
+  <h1>📚 Controle de Aulas</h1>
+  <span class="header-date" id="header-date"></span>
 </div>
 
-<!-- APP (oculto até login) -->
-<div id="app" style="display:none">
+<div class="container">
 
-  <div class="header">
-    <h1>📚 Controle de Aulas</h1>
-    <div class="header-right">
-      <span class="header-date" id="header-date"></span>
-      <button class="btn-logout" onclick="sair()">Sair</button>
+  <div class="install-banner hidden" id="install-banner">
+    <p>Instale como app na tela inicial!</p>
+    <button class="btn-install" id="btn-install">Instalar</button>
+  </div>
+
+  <div class="card">
+    <div class="status-row">
+      <span class="card-title">Configuração</span>
+      <button class="btn-config-toggle" onclick="toggleConfig()">⚙ Google Sheets</button>
+    </div>
+    <div class="instrucoes" id="instrucoes-iniciais">
+      <strong>Primeiro uso:</strong> Configure a URL do Google Sheets para ativar o envio. Clique em "⚙ Google Sheets" acima.
+    </div>
+    <div class="config-section" id="config-section">
+      <div class="instrucoes">
+        <strong>Como configurar (só uma vez):</strong>
+        <ol>
+          <li>Abra o <a href="https://sheets.google.com" target="_blank">Google Sheets</a> e crie uma planilha nova</li>
+          <li>Clique em <strong>Extensões → Apps Script</strong></li>
+          <li>Apague tudo e cole o código do arquivo <strong>codigo_apps_script.txt</strong></li>
+          <li>Salve → <strong>Implantar → Nova implantação</strong></li>
+          <li>Tipo: <strong>App da Web</strong> · Executar como: <strong>Eu</strong> · Acesso: <strong>Qualquer pessoa</strong></li>
+          <li>Clique em <strong>Implantar</strong>, autorize e copie a URL</li>
+          <li>Cole a URL abaixo e salve</li>
+        </ol>
+      </div>
+      <p class="config-label">URL do Apps Script:</p>
+      <input class="config-input" id="sheet-url" type="url" placeholder="https://script.google.com/macros/s/..." />
+      <br><br>
+      <button class="btn btn-add" onclick="salvarConfig()" style="height:40px;font-size:13px;padding:0 16px;">Salvar URL</button>
     </div>
   </div>
 
-  <div class="container">
-
-    <div class="install-banner hidden" id="install-banner">
-      <p>Instale como app na tela inicial!</p>
-      <button class="btn-install" id="btn-install">Instalar</button>
+  <div class="card">
+    <p class="card-title">Registrar aula</p>
+    <div class="form-row">
+      <input class="input-aluno" id="aluno" type="text" placeholder="Nome do aluno (opcional)" autocomplete="off" />
+      <select class="select-val" id="valor">
+        <option value="80">R$ 80</option>
+        <option value="90">R$ 90</option>
+      </select>
+      <button class="btn btn-add" onclick="adicionarAula()">+ Add</button>
     </div>
-
-    <div class="card">
-      <div class="status-row">
-        <span class="card-title">Configuração</span>
-        <button class="btn-config-toggle" onclick="toggleConfig()">⚙ Google Sheets</button>
-      </div>
-      <div class="instrucoes" id="instrucoes-iniciais">
-        <strong>Primeiro uso:</strong> Configure a URL do Google Sheets para ativar o envio. Clique em "⚙ Google Sheets" acima.
-      </div>
-      <div class="config-section" id="config-section">
-        <div class="instrucoes">
-          <strong>Como configurar (só uma vez):</strong>
-          <ol>
-            <li>Abra o <a href="https://sheets.google.com" target="_blank">Google Sheets</a> e crie uma planilha nova</li>
-            <li>Clique em <strong>Extensões → Apps Script</strong></li>
-            <li>Apague tudo e cole o código do arquivo <strong>codigo_apps_script.txt</strong></li>
-            <li>Salve → <strong>Implantar → Nova implantação</strong></li>
-            <li>Tipo: <strong>App da Web</strong> · Executar como: <strong>Eu</strong> · Acesso: <strong>Qualquer pessoa</strong></li>
-            <li>Clique em <strong>Implantar</strong>, autorize e copie a URL</li>
-            <li>Cole a URL abaixo e salve</li>
-          </ol>
-        </div>
-        <p class="config-label">URL do Apps Script:</p>
-        <input class="config-input" id="sheet-url" type="url" placeholder="https://script.google.com/macros/s/..." />
-        <br><br>
-        <button class="btn btn-add" onclick="salvarConfig()" style="height:40px;font-size:13px;padding:0 16px;">Salvar URL</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <p class="card-title">Registrar aula</p>
-      <div class="form-row">
-        <input class="input-aluno" id="aluno" type="text" placeholder="Nome do aluno (opcional)" autocomplete="off" />
-        <select class="select-val" id="valor">
-          <option value="80">R$ 80</option>
-          <option value="90">R$ 90</option>
-        </select>
-        <button class="btn btn-add" onclick="adicionarAula()">+ Add</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <p class="card-title">Totais do dia</p>
-      <div class="metrics">
-        <div class="metric"><div class="metric-label">Você</div><div class="metric-value m-voce" id="m-voce">R$ 0</div></div>
-        <div class="metric"><div class="metric-label">Auxiliar</div><div class="metric-value m-aux" id="m-aux">R$ 0</div></div>
-        <div class="metric"><div class="metric-label">Firma</div><div class="metric-value m-firma" id="m-firma">R$ 0</div></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="status-row">
-        <span class="card-title">Aulas de hoje (<span id="qtd">0</span>)</span>
-        <button class="btn btn-clear" onclick="limparTudo()">Limpar</button>
-      </div>
-      <div id="lista"><p class="empty">Nenhuma aula registrada hoje.</p></div>
-      <br>
-      <button class="btn btn-send" id="btn-send" onclick="enviarParaSheets()" disabled>↑ Enviar para Google Sheets</button>
-    </div>
-
   </div>
+
+  <div class="card">
+    <p class="card-title">Totais do dia</p>
+    <div class="metrics">
+      <div class="metric"><div class="metric-label">Você</div><div class="metric-value m-voce" id="m-voce">R$ 0</div></div>
+      <div class="metric"><div class="metric-label">Auxiliar</div><div class="metric-value m-aux" id="m-aux">R$ 0</div></div>
+      <div class="metric"><div class="metric-label">Firma</div><div class="metric-value m-firma" id="m-firma">R$ 0</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="status-row">
+      <span class="card-title">Aulas de hoje (<span id="qtd">0</span>)</span>
+      <button class="btn btn-clear" onclick="limparTudo()">Limpar</button>
+    </div>
+    <div id="lista"><p class="empty">Nenhuma aula registrada hoje.</p></div>
+    <br>
+    <button class="btn btn-send" id="btn-send" onclick="enviarParaSheets()" disabled>↑ Enviar para Google Sheets</button>
+  </div>
+
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-  // ─────────────────────────────────────────────
-  // CREDENCIAIS — altere aqui as senhas
-  // ─────────────────────────────────────────────
-  var USUARIOS = {
-    'adm': '1001',   // usuário 1 — troque para sua senha
-    'auxiliar':  '1001'    // usuário 2 — troque para a senha da auxiliar
-  };
-  // ─────────────────────────────────────────────
-
   var REGRAS = { 80: { voce: 15, aux: 25 }, 90: { voce: 20, aux: 25 } };
   var aulas = [];
   var deferredPrompt = null;
 
   var hoje = new Date();
-  var dataFormatada = hoje.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' });
+  document.getElementById('header-date').textContent = hoje.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' });
   var dataISO = hoje.toISOString().slice(0, 10);
 
-  // Verifica se já está logado
-  if (sessionStorage.getItem('logado') === 'sim') {
-    mostrarApp();
+  var urlSalva = localStorage.getItem('sheets_url') || '';
+  if (urlSalva) {
+    document.getElementById('sheet-url').value = urlSalva;
+    document.getElementById('instrucoes-iniciais').style.display = 'none';
   }
 
-  document.getElementById('login-pass').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') fazerLogin();
-  });
-
-  function fazerLogin() {
-    var user = document.getElementById('login-user').value.trim().toLowerCase();
-    var pass = document.getElementById('login-pass').value;
-    if (USUARIOS[user] && USUARIOS[user] === pass) {
-      sessionStorage.setItem('logado', 'sim');
-      mostrarApp();
-    } else {
-      document.getElementById('login-erro').textContent = 'Usuário ou senha incorretos.';
-      document.getElementById('login-pass').value = '';
-    }
-  }
-
-  function mostrarApp() {
-    document.getElementById('tela-login').classList.add('hidden');
-    document.getElementById('app').style.display = 'block';
-    document.getElementById('header-date').textContent = dataFormatada;
-    var urlSalva = localStorage.getItem('sheets_url') || '';
-    if (urlSalva) {
-      document.getElementById('sheet-url').value = urlSalva;
-      document.getElementById('instrucoes-iniciais').style.display = 'none';
-    }
-  }
-
-  function sair() {
-    sessionStorage.removeItem('logado');
-    location.reload();
-  }
-
-  // PWA install prompt
   window.addEventListener('beforeinstallprompt', function(e) {
     e.preventDefault();
     deferredPrompt = e;
