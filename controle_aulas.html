@@ -13,92 +13,243 @@
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; min-height: 100vh; padding-bottom: env(safe-area-inset-bottom); }
 
+  /* HEADER */
   .header { background: #0f7a55; padding: 16px 20px; padding-top: calc(16px + env(safe-area-inset-top)); display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; }
   .header h1 { font-size: 18px; font-weight: 600; color: #fff; }
   .header-date { font-size: 12px; color: rgba(255,255,255,0.75); }
+  .btn-back { background: rgba(255,255,255,0.2); border: none; color: #fff; font-size: 13px; padding: 6px 12px; border-radius: 8px; cursor: pointer; }
 
+  /* TELA INICIAL */
+  #tela-home { display: block; }
+  .home-container { max-width: 540px; margin: 0 auto; padding: 24px 16px; }
+  .home-title { font-size: 14px; color: #888; text-align: center; margin-bottom: 20px; font-weight: 500; }
+  .home-btn { display: flex; align-items: center; gap: 16px; background: #fff; border: 1px solid #e5e5e5; border-radius: 14px; padding: 20px; margin-bottom: 12px; cursor: pointer; text-align: left; width: 100%; transition: border-color 0.15s; }
+  .home-btn:active { background: #f8f8f8; }
+  .home-btn-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .icon-recente { background: #e6f4ee; }
+  .icon-passado { background: #e8f0fe; }
+  .icon-config  { background: #f5f5f5; }
+  .home-btn-text h3 { font-size: 16px; font-weight: 600; color: #1a1a1a; margin-bottom: 3px; }
+  .home-btn-text p  { font-size: 13px; color: #888; }
+  .home-btn-arrow { margin-left: auto; color: #ccc; font-size: 18px; }
+  .config-dot { width: 8px; height: 8px; border-radius: 50%; background: #f0a500; display: inline-block; margin-left: 6px; vertical-align: middle; }
+  .config-dot.ok { background: #0f7a55; }
+
+  /* CONTAINER GERAL */
   .container { max-width: 540px; margin: 0 auto; padding: 16px; }
   .card { background: #fff; border-radius: 12px; border: 1px solid #e5e5e5; padding: 16px; margin-bottom: 12px; }
   .card-title { font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+  .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
 
+  /* FORMULÁRIO */
   .form-row { display: flex; gap: 8px; flex-wrap: wrap; }
-  .input-aluno { flex: 1; min-width: 140px; height: 44px; padding: 0 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; color: #1a1a1a; outline: none; }
-  .input-aluno:focus { border-color: #0f7a55; background: #fff; }
-  .select-val { height: 44px; padding: 0 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; color: #1a1a1a; outline: none; cursor: pointer; }
+  .input-field { flex: 1; min-width: 140px; height: 44px; padding: 0 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; color: #1a1a1a; outline: none; }
+  .input-field:focus { border-color: #0f7a55; background: #fff; }
+  .select-field { height: 44px; padding: 0 10px; font-size: 15px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; color: #1a1a1a; outline: none; cursor: pointer; }
   .btn { height: 44px; padding: 0 18px; font-size: 15px; border-radius: 8px; cursor: pointer; font-weight: 600; border: none; transition: opacity 0.15s; }
   .btn:active { opacity: 0.75; transform: scale(0.98); }
-  .btn-add { background: #1a1a1a; color: #fff; }
+  .btn-add  { background: #1a1a1a; color: #fff; }
   .btn-send { background: #0f7a55; color: #fff; width: 100%; margin-top: 4px; height: 50px; font-size: 16px; border-radius: 10px; }
   .btn-send:disabled { background: #aaa; cursor: not-allowed; }
   .btn-clear { background: #f0f0f0; color: #555; font-size: 13px; height: 34px; padding: 0 14px; }
 
+  /* MÉTRICAS */
   .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .metric { background: #f8f8f8; border-radius: 8px; padding: 12px 8px; text-align: center; }
   .metric-label { font-size: 11px; color: #888; margin-bottom: 4px; }
   .metric-value { font-size: 18px; font-weight: 700; }
-  .m-voce { color: #0f7a55; }
-  .m-aux { color: #1a6fa8; }
+  .m-voce    { color: #0f7a55; }
+  .m-aux     { color: #1a6fa8; }
   .m-empresa { color: #555; }
 
+  /* LISTA */
   .aula-item { display: flex; align-items: center; gap: 8px; padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
   .aula-item:last-child { border-bottom: none; }
   .badge { font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 6px; white-space: nowrap; }
   .badge-80 { background: #e8f0fe; color: #1a6fa8; }
   .badge-90 { background: #e6f4ee; color: #0f7a55; }
-  .aula-nome { font-size: 14px; font-weight: 500; color: #222; }
-  .aula-detalhes { font-size: 12px; color: #999; margin-top: 2px; }
-  .btn-rm { background: none; border: none; color: #ccc; cursor: pointer; font-size: 18px; padding: 6px 8px; border-radius: 6px; line-height: 1; min-width: 36px; min-height: 36px; display: flex; align-items: center; justify-content: center; }
+  .aula-nome      { font-size: 14px; font-weight: 500; color: #222; }
+  .aula-detalhes  { font-size: 12px; color: #999; margin-top: 2px; }
+  .btn-rm { background: none; border: none; color: #ccc; cursor: pointer; font-size: 18px; padding: 6px 8px; border-radius: 6px; min-width: 36px; min-height: 36px; display: flex; align-items: center; justify-content: center; }
   .btn-rm:active { background: #fee; color: #c00; }
   .empty { text-align: center; padding: 24px 0; color: #bbb; font-size: 14px; }
 
+  /* PASSADO — formulário de totais */
+  .passado-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .field-group label { display: block; font-size: 12px; color: #888; margin-bottom: 5px; font-weight: 500; }
+  .field-group input, .field-group select { width: 100%; height: 44px; padding: 0 12px; font-size: 15px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; color: #1a1a1a; outline: none; }
+  .field-group input:focus, .field-group select:focus { border-color: #0f7a55; }
+  .field-group.full { grid-column: 1 / -1; }
+  .resumo-passado { background: #f8f8f8; border-radius: 10px; padding: 14px; margin-bottom: 12px; }
+  .resumo-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+  .resumo-row:last-child { border-bottom: none; font-weight: 700; font-size: 15px; }
+  .resumo-row span:first-child { color: #666; }
+  .rv { color: #0f7a55; font-weight: 600; }
+  .ra { color: #1a6fa8; font-weight: 600; }
+  .re { color: #555; font-weight: 600; }
+
+  /* CONFIG */
   .config-section { display: none; }
   .config-section.open { display: block; }
-  .config-label { font-size: 13px; color: #555; margin-bottom: 6px; margin-top: 12px; }
-  .config-input { width: 100%; height: 44px; padding: 0 12px; font-size: 13px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; color: #1a1a1a; outline: none; }
+  .config-input { width: 100%; height: 44px; padding: 0 12px; font-size: 13px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa; color: #1a1a1a; outline: none; margin-bottom: 10px; }
   .config-input:focus { border-color: #0f7a55; }
-  .btn-config-toggle { background: none; border: 1px solid #ddd; color: #888; font-size: 12px; height: 32px; padding: 0 12px; border-radius: 6px; cursor: pointer; }
-
-  .toast { position: fixed; bottom: calc(24px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); background: #1a1a1a; color: #fff; padding: 14px 22px; border-radius: 12px; font-size: 14px; font-weight: 500; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 100; text-align: center; max-width: 300px; white-space: nowrap; }
-  .toast.show { opacity: 1; }
-  .toast.erro { background: #c00; }
-  .toast.ok { background: #0f7a55; }
-
-  .status-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
   .instrucoes { background: #fffbea; border: 1px solid #f0e060; border-radius: 8px; padding: 12px; font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 12px; }
   .instrucoes strong { color: #333; }
   .instrucoes a { color: #1a6fa8; }
   .instrucoes ol { padding-left: 18px; margin-top: 6px; }
   .instrucoes li { margin-bottom: 4px; }
 
+  /* TOAST */
+  .toast { position: fixed; bottom: calc(24px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); background: #1a1a1a; color: #fff; padding: 14px 22px; border-radius: 12px; font-size: 14px; font-weight: 500; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 200; text-align: center; max-width: 300px; white-space: nowrap; }
+  .toast.show { opacity: 1; }
+  .toast.erro { background: #c00; }
+  .toast.ok   { background: #0f7a55; }
+
+  /* TELAS */
+  .tela { display: none; }
+  .tela.ativa { display: block; }
+
   .install-banner { background: #e6f4ee; border: 1px solid #0f7a55; border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .install-banner p { font-size: 13px; color: #0f7a55; font-weight: 500; flex: 1; }
-  .btn-install { background: #0f7a55; color: #fff; font-size: 13px; height: 36px; padding: 0 14px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; white-space: nowrap; }
+  .btn-install { background: #0f7a55; color: #fff; font-size: 13px; height: 36px; padding: 0 14px; border-radius: 8px; border: none; cursor: pointer; font-weight: 600; }
   .install-banner.hidden { display: none; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>📚 Controle de Aulas</h1>
+<!-- HEADER -->
+<div class="header" id="header">
+  <div style="display:flex;align-items:center;gap:10px">
+    <button class="btn-back" id="btn-back" onclick="irHome()" style="display:none">← Voltar</button>
+    <h1 id="header-title">📚 Controle de Aulas</h1>
+  </div>
   <span class="header-date" id="header-date"></span>
 </div>
 
-<div class="container">
+<!-- ══ TELA HOME ══ -->
+<div id="tela-home" class="tela ativa">
+  <div class="home-container">
+    <p class="home-title">O que deseja registrar?</p>
 
-  <div class="install-banner hidden" id="install-banner">
-    <p>Instale como app na tela inicial!</p>
-    <button class="btn-install" id="btn-install">Instalar</button>
+    <div class="install-banner hidden" id="install-banner">
+      <p>Instale como app na tela inicial!</p>
+      <button class="btn-install" id="btn-install">Instalar</button>
+    </div>
+
+    <button class="home-btn" onclick="irTela('tela-recente')">
+      <div class="home-btn-icon icon-recente">📅</div>
+      <div class="home-btn-text">
+        <h3>Atendimentos recentes</h3>
+        <p>Registrar aulas de hoje</p>
+      </div>
+      <span class="home-btn-arrow">›</span>
+    </button>
+
+    <button class="home-btn" onclick="irTela('tela-passado')">
+      <div class="home-btn-icon icon-passado">🗂️</div>
+      <div class="home-btn-text">
+        <h3>Atendimentos passados</h3>
+        <p>Registrar totais de um mês anterior</p>
+      </div>
+      <span class="home-btn-arrow">›</span>
+    </button>
+
+    <button class="home-btn" onclick="irTela('tela-config')">
+      <div class="home-btn-icon icon-config">⚙️</div>
+      <div class="home-btn-text">
+        <h3>Configurações <span class="config-dot" id="config-dot"></span></h3>
+        <p id="config-status-text">Conectar ao Google Sheets</p>
+      </div>
+      <span class="home-btn-arrow">›</span>
+    </button>
   </div>
+</div>
 
-  <div class="card">
-    <div class="status-row">
-      <span class="card-title">Configuração</span>
-      <button class="btn-config-toggle" onclick="toggleConfig()">⚙ Google Sheets</button>
+<!-- ══ TELA RECENTE ══ -->
+<div id="tela-recente" class="tela">
+  <div class="container">
+    <div class="card">
+      <p class="card-title">Registrar aula</p>
+      <div class="form-row">
+        <input class="input-field" id="aluno" type="text" placeholder="Nome do aluno (opcional)" autocomplete="off" />
+        <select class="select-field" id="valor">
+          <option value="80">R$ 80</option>
+          <option value="90">R$ 90</option>
+        </select>
+        <button class="btn btn-add" onclick="adicionarAula()">+ Add</button>
+      </div>
     </div>
-    <div class="instrucoes" id="instrucoes-iniciais">
-      <strong>Primeiro uso:</strong> Configure a URL do Google Sheets para ativar o envio. Clique em "⚙ Google Sheets" acima.
+
+    <div class="card">
+      <p class="card-title">Totais do dia</p>
+      <div class="metrics">
+        <div class="metric"><div class="metric-label">Você</div><div class="metric-value m-voce" id="m-voce">R$ 0</div></div>
+        <div class="metric"><div class="metric-label">Auxiliar</div><div class="metric-value m-aux" id="m-aux">R$ 0</div></div>
+        <div class="metric"><div class="metric-label">Empresa</div><div class="metric-value m-empresa" id="m-empresa">R$ 0</div></div>
+      </div>
     </div>
-    <div class="config-section" id="config-section">
+
+    <div class="card">
+      <div class="status-row">
+        <span class="card-title">Aulas de hoje (<span id="qtd">0</span>)</span>
+        <button class="btn btn-clear" onclick="limparTudo()">Limpar</button>
+      </div>
+      <div id="lista"><p class="empty">Nenhuma aula registrada hoje.</p></div>
+      <br>
+      <button class="btn btn-send" id="btn-send" onclick="enviarRecente()" disabled>↑ Enviar para Google Sheets</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TELA PASSADO ══ -->
+<div id="tela-passado" class="tela">
+  <div class="container">
+    <div class="card">
+      <p class="card-title">Mês de referência</p>
+      <div class="passado-grid">
+        <div class="field-group">
+          <label>Mês</label>
+          <select class="select-field" id="p-mes" onchange="calcularPassado()" style="width:100%">
+            <option value="1">Janeiro</option><option value="2">Fevereiro</option>
+            <option value="3">Março</option><option value="4">Abril</option>
+            <option value="5">Maio</option><option value="6">Junho</option>
+            <option value="7">Julho</option><option value="8">Agosto</option>
+            <option value="9">Setembro</option><option value="10">Outubro</option>
+            <option value="11">Novembro</option><option value="12">Dezembro</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Ano</label>
+          <input type="number" id="p-ano" value="2025" min="2020" max="2099" onchange="calcularPassado()" style="width:100%;height:44px;padding:0 12px;font-size:15px;border:1px solid #ddd;border-radius:8px;background:#fafafa;color:#1a1a1a;outline:none;" />
+        </div>
+        <div class="field-group">
+          <label>Qtd aulas R$ 80</label>
+          <input type="number" id="p-qtd80" value="0" min="0" oninput="calcularPassado()" style="width:100%;height:44px;padding:0 12px;font-size:15px;border:1px solid #ddd;border-radius:8px;background:#fafafa;color:#1a1a1a;outline:none;" />
+        </div>
+        <div class="field-group">
+          <label>Qtd aulas R$ 90</label>
+          <input type="number" id="p-qtd90" value="0" min="0" oninput="calcularPassado()" style="width:100%;height:44px;padding:0 12px;font-size:15px;border:1px solid #ddd;border-radius:8px;background:#fafafa;color:#1a1a1a;outline:none;" />
+        </div>
+      </div>
+
+      <div class="resumo-passado" id="resumo-passado">
+        <div class="resumo-row"><span>Total de aulas</span><span id="rp-aulas">0</span></div>
+        <div class="resumo-row"><span>Total bruto</span><span id="rp-bruto">R$ 0</span></div>
+        <div class="resumo-row"><span>Você recebe</span><span class="rv" id="rp-voce">R$ 0</span></div>
+        <div class="resumo-row"><span>Auxiliar recebe</span><span class="ra" id="rp-aux">R$ 0</span></div>
+        <div class="resumo-row"><span>Empresa recebe</span><span class="re" id="rp-empresa">R$ 0</span></div>
+      </div>
+
+      <button class="btn btn-send" id="btn-send-passado" onclick="enviarPassado()">↑ Enviar para Google Sheets</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TELA CONFIG ══ -->
+<div id="tela-config" class="tela">
+  <div class="container">
+    <div class="card">
+      <p class="card-title">Google Sheets</p>
       <div class="instrucoes">
         <strong>Como configurar (só uma vez):</strong>
         <ol>
@@ -111,44 +262,11 @@
           <li>Cole a URL abaixo e salve</li>
         </ol>
       </div>
-      <p class="config-label">URL do Apps Script:</p>
+      <p style="font-size:13px;color:#555;margin-bottom:6px;">URL do Apps Script:</p>
       <input class="config-input" id="sheet-url" type="url" placeholder="https://script.google.com/macros/s/..." />
-      <br><br>
       <button class="btn btn-add" onclick="salvarConfig()" style="height:40px;font-size:13px;padding:0 16px;">Salvar URL</button>
     </div>
   </div>
-
-  <div class="card">
-    <p class="card-title">Registrar aula</p>
-    <div class="form-row">
-      <input class="input-aluno" id="aluno" type="text" placeholder="Nome do aluno (opcional)" autocomplete="off" />
-      <select class="select-val" id="valor">
-        <option value="80">R$ 80</option>
-        <option value="90">R$ 90</option>
-      </select>
-      <button class="btn btn-add" onclick="adicionarAula()">+ Add</button>
-    </div>
-  </div>
-
-  <div class="card">
-    <p class="card-title">Totais do dia</p>
-    <div class="metrics">
-      <div class="metric"><div class="metric-label">Você</div><div class="metric-value m-voce" id="m-voce">R$ 0</div></div>
-      <div class="metric"><div class="metric-label">Auxiliar</div><div class="metric-value m-aux" id="m-aux">R$ 0</div></div>
-      <div class="metric"><div class="metric-label">Empresa</div><div class="metric-value m-empresa" id="m-empresa">R$ 0</div></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="status-row">
-      <span class="card-title">Aulas de hoje (<span id="qtd">0</span>)</span>
-      <button class="btn btn-clear" onclick="limparTudo()">Limpar</button>
-    </div>
-    <div id="lista"><p class="empty">Nenhuma aula registrada hoje.</p></div>
-    <br>
-    <button class="btn btn-send" id="btn-send" onclick="enviarParaSheets()" disabled>↑ Enviar para Google Sheets</button>
-  </div>
-
 </div>
 
 <div class="toast" id="toast"></div>
@@ -157,50 +275,52 @@
   var REGRAS = { 80: { voce: 15, aux: 25 }, 90: { voce: 20, aux: 25 } };
   var aulas = [];
   var deferredPrompt = null;
+  var telaAtual = 'tela-home';
 
   var hoje = new Date();
   document.getElementById('header-date').textContent = hoje.toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' });
   var dataISO = hoje.toISOString().slice(0, 10);
 
+  // Define mês atual no seletor de passado
+  document.getElementById('p-mes').value = hoje.getMonth() === 0 ? 12 : hoje.getMonth();
+  document.getElementById('p-ano').value  = hoje.getMonth() === 0 ? hoje.getFullYear() - 1 : hoje.getFullYear();
+
+  // Config status
   var urlSalva = localStorage.getItem('sheets_url') || '';
   if (urlSalva) {
     document.getElementById('sheet-url').value = urlSalva;
-    document.getElementById('instrucoes-iniciais').style.display = 'none';
+    document.getElementById('config-dot').classList.add('ok');
+    document.getElementById('config-status-text').textContent = 'Conectado ao Google Sheets';
   }
 
+  // PWA
   window.addEventListener('beforeinstallprompt', function(e) {
-    e.preventDefault();
-    deferredPrompt = e;
+    e.preventDefault(); deferredPrompt = e;
     document.getElementById('install-banner').classList.remove('hidden');
   });
   document.getElementById('btn-install').addEventListener('click', function() {
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(function() {
-      deferredPrompt = null;
-      document.getElementById('install-banner').classList.add('hidden');
-    });
+    deferredPrompt.userChoice.then(function() { deferredPrompt = null; document.getElementById('install-banner').classList.add('hidden'); });
   });
 
-  document.getElementById('aluno').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') adicionarAula();
-  });
+  document.getElementById('aluno').addEventListener('keydown', function(e) { if (e.key === 'Enter') adicionarAula(); });
 
-  function toggleConfig() {
-    document.getElementById('config-section').classList.toggle('open');
+  // ── NAVEGAÇÃO ────────────────────────────────
+  var titulos = { 'tela-home': '📚 Controle de Aulas', 'tela-recente': '📅 Atendimentos Recentes', 'tela-passado': '🗂️ Atendimentos Passados', 'tela-config': '⚙️ Configurações' };
+
+  function irTela(id) {
+    document.getElementById(telaAtual).classList.remove('ativa');
+    document.getElementById(id).classList.add('ativa');
+    telaAtual = id;
+    document.getElementById('header-title').textContent = titulos[id];
+    document.getElementById('btn-back').style.display = id === 'tela-home' ? 'none' : 'block';
+    window.scrollTo(0, 0);
   }
 
-  function salvarConfig() {
-    var url = document.getElementById('sheet-url').value.trim();
-    if (!url.startsWith('https://script.google.com')) {
-      mostrarToast('URL inválida!', 'erro'); return;
-    }
-    localStorage.setItem('sheets_url', url);
-    document.getElementById('instrucoes-iniciais').style.display = 'none';
-    document.getElementById('config-section').classList.remove('open');
-    mostrarToast('URL salva!', 'ok');
-  }
+  function irHome() { irTela('tela-home'); }
 
+  // ── RECENTES ─────────────────────────────────
   function adicionarAula() {
     var aluno = document.getElementById('aluno').value.trim() || 'Aluno';
     var valor = parseInt(document.getElementById('valor').value);
@@ -210,10 +330,7 @@
     renderizar();
   }
 
-  function remover(id) {
-    aulas = aulas.filter(function(a) { return a.id !== id; });
-    renderizar();
-  }
+  function remover(id) { aulas = aulas.filter(function(a) { return a.id !== id; }); renderizar(); }
 
   function limparTudo() {
     if (aulas.length === 0) return;
@@ -231,57 +348,105 @@
     }
     var tv = 0, ta = 0, tf = 0, html = '';
     for (var i = 0; i < aulas.length; i++) {
-      var a = aulas[i];
-      var r = REGRAS[a.valor];
-      var empresa = a.valor - r.voce - r.aux;
-      tv += r.voce; ta += r.aux; tf += empresa;
+      var a = aulas[i]; var r = REGRAS[a.valor]; var emp = a.valor - r.voce - r.aux;
+      tv += r.voce; ta += r.aux; tf += emp;
       html += '<div class="aula-item">' +
         '<button class="btn-rm" data-id="' + a.id + '">✕</button>' +
         '<span class="badge badge-' + a.valor + '">R$' + a.valor + '</span>' +
         '<div style="flex:1"><div class="aula-nome">' + a.aluno + '</div>' +
-        '<div class="aula-detalhes">Você R$' + r.voce + ' · Aux R$' + r.aux + ' · Empresa R$' + empresa + '</div></div>' +
+        '<div class="aula-detalhes">Você R$' + r.voce + ' · Aux R$' + r.aux + ' · Empresa R$' + emp + '</div></div>' +
         '</div>';
     }
     lista.innerHTML = html;
     lista.querySelectorAll('.btn-rm').forEach(function(btn) {
       btn.addEventListener('click', function() { remover(parseInt(this.getAttribute('data-id'))); });
     });
-    document.getElementById('m-voce').textContent = 'R$ ' + tv;
-    document.getElementById('m-aux').textContent = 'R$ ' + ta;
+    document.getElementById('m-voce').textContent    = 'R$ ' + tv;
+    document.getElementById('m-aux').textContent     = 'R$ ' + ta;
     document.getElementById('m-empresa').textContent = 'R$ ' + tf;
   }
 
-  function enviarParaSheets() {
+  function enviarRecente() {
     var url = localStorage.getItem('sheets_url');
-    if (!url) { mostrarToast('Configure a URL primeiro!', 'erro'); return; }
+    if (!url) { mostrarToast('Configure o Sheets primeiro!', 'erro'); irTela('tela-config'); return; }
     var btn = document.getElementById('btn-send');
     btn.disabled = true; btn.textContent = 'Enviando...';
     var payload = aulas.map(function(a) {
       var r = REGRAS[a.valor];
       return { data: dataISO, aluno: a.aluno, valor: a.valor, voce: r.voce, auxiliar: r.aux, empresa: a.valor - r.voce - r.aux };
     });
-    fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ aulas: payload }) })
+    fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ tipo: 'recente', aulas: payload }) })
     .then(function() {
       mostrarToast('✓ Enviado para o Sheets!', 'ok');
       btn.textContent = '✓ Enviado!';
       setTimeout(function() { aulas = []; renderizar(); btn.textContent = '↑ Enviar para Google Sheets'; }, 2000);
     })
-    .catch(function() {
-      mostrarToast('Erro ao enviar.', 'erro');
-      btn.disabled = false; btn.textContent = '↑ Enviar para Google Sheets';
-    });
+    .catch(function() { mostrarToast('Erro ao enviar.', 'erro'); btn.disabled = false; btn.textContent = '↑ Enviar para Google Sheets'; });
+  }
+
+  // ── PASSADOS ─────────────────────────────────
+  function calcularPassado() {
+    var qtd80 = parseInt(document.getElementById('p-qtd80').value) || 0;
+    var qtd90 = parseInt(document.getElementById('p-qtd90').value) || 0;
+    var totalAulas  = qtd80 + qtd90;
+    var totalBruto  = qtd80 * 80 + qtd90 * 90;
+    var totalVoce   = qtd80 * REGRAS[80].voce + qtd90 * REGRAS[90].voce;
+    var totalAux    = (qtd80 + qtd90) * 25;
+    var totalEmp    = totalBruto - totalVoce - totalAux;
+    document.getElementById('rp-aulas').textContent   = totalAulas;
+    document.getElementById('rp-bruto').textContent   = 'R$ ' + totalBruto;
+    document.getElementById('rp-voce').textContent    = 'R$ ' + totalVoce;
+    document.getElementById('rp-aux').textContent     = 'R$ ' + totalAux;
+    document.getElementById('rp-empresa').textContent = 'R$ ' + totalEmp;
+  }
+
+  function enviarPassado() {
+    var url = localStorage.getItem('sheets_url');
+    if (!url) { mostrarToast('Configure o Sheets primeiro!', 'erro'); irTela('tela-config'); return; }
+    var qtd80 = parseInt(document.getElementById('p-qtd80').value) || 0;
+    var qtd90 = parseInt(document.getElementById('p-qtd90').value) || 0;
+    if (qtd80 + qtd90 === 0) { mostrarToast('Informe a quantidade de aulas!', 'erro'); return; }
+
+    var mes  = document.getElementById('p-mes').value.padStart(2, '0');
+    var ano  = document.getElementById('p-ano').value;
+    var data = ano + '-' + mes + '-01';
+
+    var totalBruto = qtd80 * 80 + qtd90 * 90;
+    var totalVoce  = qtd80 * REGRAS[80].voce + qtd90 * REGRAS[90].voce;
+    var totalAux   = (qtd80 + qtd90) * 25;
+    var totalEmp   = totalBruto - totalVoce - totalAux;
+
+    var btn = document.getElementById('btn-send-passado');
+    btn.disabled = true; btn.textContent = 'Enviando...';
+
+    var payload = { tipo: 'passado', data: data, qtd80: qtd80, qtd90: qtd90, totalAulas: qtd80 + qtd90, totalBruto: totalBruto, voce: totalVoce, auxiliar: totalAux, empresa: totalEmp };
+
+    fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+    .then(function() {
+      mostrarToast('✓ Enviado para o Sheets!', 'ok');
+      btn.textContent = '✓ Enviado!';
+      setTimeout(function() { btn.disabled = false; btn.textContent = '↑ Enviar para Google Sheets'; }, 2000);
+    })
+    .catch(function() { mostrarToast('Erro ao enviar.', 'erro'); btn.disabled = false; btn.textContent = '↑ Enviar para Google Sheets'; });
+  }
+
+  // ── CONFIG ───────────────────────────────────
+  function salvarConfig() {
+    var url = document.getElementById('sheet-url').value.trim();
+    if (!url.startsWith('https://script.google.com')) { mostrarToast('URL inválida!', 'erro'); return; }
+    localStorage.setItem('sheets_url', url);
+    document.getElementById('config-dot').classList.add('ok');
+    document.getElementById('config-status-text').textContent = 'Conectado ao Google Sheets';
+    mostrarToast('URL salva!', 'ok');
   }
 
   function mostrarToast(msg, tipo) {
     var t = document.getElementById('toast');
-    t.textContent = msg;
-    t.className = 'toast show ' + (tipo || '');
+    t.textContent = msg; t.className = 'toast show ' + (tipo || '');
     setTimeout(function() { t.className = 'toast'; }, 3000);
   }
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(function(){});
-  }
+  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function(){}); }
 </script>
 </body>
 </html>
