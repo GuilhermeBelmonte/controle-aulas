@@ -1,16 +1,24 @@
-const CACHE = 'aulas-v1';
-const FILES = ['./controle_aulas.html', './manifest.json'];
+const CACHE = 'aulas-v2';
 
 self.addEventListener('install', function(e) {
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', function(e) {
   e.waitUntil(
-    caches.open(CACHE).then(function(c) { return c.addAll(FILES); })
+    caches.keys().then(function(keys) {
+      return Promise.all(
+        keys.filter(function(k) { return k !== CACHE; }).map(function(k) { return caches.delete(k); })
+      );
+    }).then(function() { return self.clients.claim(); })
   );
 });
 
+// Sempre busca na rede primeiro, só usa cache se estiver offline
 self.addEventListener('fetch', function(e) {
   e.respondWith(
-    caches.match(e.request).then(function(cached) {
-      return cached || fetch(e.request);
+    fetch(e.request).catch(function() {
+      return caches.match(e.request);
     })
   );
 });
